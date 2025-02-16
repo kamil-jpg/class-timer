@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display:flex;
+            justify-content: center;
+            background-color: #F3DEBA;
+        }
+        #cont{
+            margin-top: 200px;
+            height: auto;
+            width: 400px;
+            border: 10px ridge #ABC4AA;
+            background-color: #675D50;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 12px 12px 2px 1px #524a40;
+        }
+        *{
+            text-align: center;
+        }
+        #title{
+            font-size:50px;
+            font-weight: bolder;
+            background-color: #A9907E
+        }
+        #box {
+            font-size: 35px;
+            font-weight: bold;
+            background-color: #675D50;
+        }
+        #start {
+            font-size: 70px;
+            font-weight: 1000;
+            background-color: #A9907E
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <div id="title"></div>
+        <br>
+        <div id="box">
+            Calculating
+        </div>
+        <br>
+        <div id="start"></div>
+    </div>
+    
+    
+</body>
+
+
+<script>
+var date = new Date()
+var hours, min, sec;
+const lesson = [480, 530, 580, 640, 690, 740, 795, 845, 895, 945]
+//const lesson = [480]
+setInterval( function time(){
+    date = new Date()
+    hours = date.getHours()
+    min = date.getMinutes()
+    sec = 59 - date.getSeconds()
+    if (sec <10){
+        sec = "0"+sec
+    }
+    min = min + hours*60
+
+    for (let i = 0; i < lesson.length; i++) {
+       
+        if(lesson[i] <= min && lesson[i+1] > min){
+            timeLeft = lesson[i] + 45 - min - 1
+            
+            timeLeft = timeLeft + ":"+sec
+
+            currentLesson = i+1
+
+
+            if(lesson[i]+45 <= min){
+                timeLeft = lesson[i+1]-min-1
+                timeLeft = timeLeft + ":"+sec
+
+                currentLesson = "Przerwa"
+            }
+        }
+
+        else if(lesson[lesson.length-1] <= min){
+            timeLeft = 1440 - min + 480
+            timeLeft = timeLeft + ":"+sec
+
+            currentLesson = "none"
+        }
+
+        else if (lesson[0] > min){
+            timeLeft = lesson[0] - min
+            timeLeft = timeLeft + ":"+sec
+
+            currentLesson = "none"
+        }
+    }
+    switch(currentLesson) {
+        case "none":
+            document.getElementById("box").innerHTML = "Do rozpoczęcia kolejnej lekcji pozostało:"
+            document.getElementById("title").innerHTML = "Obecnie nie trwa żadna lekcja"
+            mag = min % 60
+            hours = (min - mag) / 60
+            mag = 60 - mag
+            if(mag < 10){
+                mag = "0"+mag
+            }
+            if (hours>8){
+                hours = 23 - hours
+                hours += 8
+            }
+            else{
+                hours = 8 -hours
+            }
+            timeLeft = hours + ":"+ mag + ":" + sec
+            document.getElementById("start").innerHTML = timeLeft
+            break
+        case "Przerwa":
+            document.getElementById("box").innerHTML = "Do końca przerwy pozostało:"
+            document.getElementById("title").innerHTML = "Trwa przerwa"
+            document.getElementById("start").innerHTML = timeLeft
+        break
+        default :
+
+        document.getElementById("box").innerHTML = "Do końca lekcji pozostało:"
+        document.getElementById("title").innerHTML = "Trwa lekcja nr " + currentLesson
+        document.getElementById("start").innerHTML = timeLeft
+       // document.getElementById("box").innerHTML = timeLeft + " Lekcja: "+ currentLesson
+       
+    }
+    
+}, 1000);
+</script>
+</html>
