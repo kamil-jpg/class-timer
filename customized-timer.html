@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display:flex;
+            justify-content: center;
+            background-color: #F3DEBA;
+        }
+        #cont{
+            margin-top: 200px;
+            height: auto;
+            width: 400px;
+            border: 10px ridge #ABC4AA;
+            background-color: #675D50;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 12px 12px 2px 1px #524a40;
+        }
+        *{
+            text-align: center;
+        }
+        #title{
+            font-size:50px;
+            font-weight: bolder;
+            background-color: #A9907E
+        }
+        #box {
+            font-size: 35px;
+            font-weight: bold;
+            background-color: #675D50;
+        }
+        #start {
+            font-size: 70px;
+            font-weight: 1000;
+            background-color: #A9907E
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <div id="title"></div>
+        <br>
+        <div id="box">
+            Calculating
+        </div>
+        <br>
+        <div id="start"></div>
+    </div>
+    
+    
+</body>
+
+
+<script>
+var date = new Date()
+var hours, min, sec;
+
+var koniec = prompt("Po której lekcji dzisiaj kończysz?");
+koniec = parseInt(koniec - 1)
+
+const lesson = [525, 575, 625, 685, 735, 785, 840, 890, 940, 990]
+
+setInterval( function time(){
+    date = new Date()
+    hours = date.getHours()
+    min = date.getMinutes() + hours * 60
+    sec = 59 - date.getSeconds()
+   
+    
+
+    wizard = lesson[koniec]
+
+
+    bialoksieznik = wizard - min
+
+    mag = bialoksieznik % 60
+    hours = (bialoksieznik - mag) / 60
+
+    mag = parseInt(mag - 1)
+ //   mag = 60 - mag  
+
+    if(mag < 10 && mag >=0){
+        mag = "0"+mag
+    }
+    if(sec < 10){
+        sec = "0"+sec
+    }
+
+    if(wizard <= min){
+        document.getElementById("start").innerHTML = "Idź do domu"
+        document.getElementById("box").innerHTML = "Koniec pracy"
+    }
+    else if(koniec > 9){
+        document.getElementById("box").style.color = "red"
+        document.getElementById("box").innerHTML = "ERROR #85EC34A21-32"
+    }
+    else{
+        timeLeft = hours + ":" + mag + ":" + sec
+
+    document.getElementById("box").innerHTML = "Do końca pracy pozostało:"
+    document.getElementById("start").innerHTML = timeLeft
+    }
+
+    
+
+
+   
+}, 1000);
+</script>
+</html>
